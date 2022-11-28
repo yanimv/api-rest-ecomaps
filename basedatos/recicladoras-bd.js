@@ -70,12 +70,21 @@ async function insertar(recicladora){
     }
 }
 
+async function insertarAdmi(recicladora){
+    try{
+        await conexion.execute('INSERT INTO recicladoras (idrecicladora, nombre_rec, telefono_rec, paga, ciudad, barrio, calle, gps, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [recicladora.idrecicladora, recicladora.nombre_rec, recicladora.telefono_rec, recicladora.paga, recicladora.ciudad, recicladora.barrio, recicladora.calle, recicladora.gps, recicladora.estado]);
+    }catch(error){
+        console.log('Error al insertar recicladora en la base de datos');
+        console.log(error);
+        throw error;
+    }
+}
+
 async function actualizar(recicladoras){
     try {
         const [res] = await conexion.execute(
             'UPDATE recicladoras SET nombre_rec = ?, telefono_rec = ?, paga = ?, ciudad = ?, barrio = ?, calle = ?, gps = ?, estado = ? WHERE idrecicladora = ?', 
-            [recicladoras.nombre_rec, recicladoras.telefono_rec, recicladoras.paga, recicladoras.ciudad, recicladoras.barrio, recicladoras.calle, recicladoras.gps, recicladoras.estado, recicladoras.idrecicladora]
-        );
+            [recicladoras.nombre_rec, recicladoras.telefono_rec, recicladoras.paga, recicladoras.ciudad, recicladoras.barrio, recicladoras.calle, recicladoras.gps, recicladoras.estado, recicladoras.idrecicladora]);
         console.log(res);
     } catch(error){
         console.log('Error al actualizar recicladora',error);
@@ -93,4 +102,4 @@ async function eliminar(idrecicladora){
 };
 
 
-module.exports = {consultar, consultarTodo, seleccionar, seleccionarRecicladora, insertar, actualizar, eliminar};
+module.exports = {consultar, consultarTodo, seleccionar, seleccionarRecicladora, insertar, insertarAdmi, actualizar, eliminar};

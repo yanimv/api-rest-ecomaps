@@ -21,7 +21,7 @@ router.post('/', async (peti, resp)=>{
         let recicladora = peti.body;
         console.log("Se va a guardar la recicladora.");
         console.log(recicladora);
-        await tablaRecicladoras.insertar(recicladora);
+        await tablaRecicladoras.insertarAdmi(recicladora);
         resp.sendStatus(200);
     }catch(e) {
         console.log('Error en el POST de la ruta administradorRec.');
