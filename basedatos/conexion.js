@@ -4,7 +4,7 @@ const conexion = mysql.createPool({
         host: 'localhost',
         user: 'root',
         password: 'Dell.2022',
-        database: 'ECOMAPS',
+        database: 'ecomaps',
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0

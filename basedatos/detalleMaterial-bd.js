@@ -61,4 +61,4 @@ async function eliminar(idrecicladora){
     }
 };
 
-module.exports = {consultar,insertar, seleccionarRecicladora, actualizar, eliminar};
+module.exports = {consultar, insertar, seleccionarRecicladora, actualizar, eliminar};

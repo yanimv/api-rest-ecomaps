@@ -62,7 +62,8 @@ async function seleccionarRecicladora(idrecicladora){
 
 async function insertar(recicladora){
     try{
-        await conexion.execute('INSERT INTO recicladoras (idrecicladora, nombre_rec, telefono_rec, paga, ciudad, barrio, calle, gps, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [recicladora.idrecicladora, recicladora.nombre_rec, recicladora.telefono_rec, recicladora.paga, recicladora.ciudad, recicladora.barrio, recicladora.calle, recicladora.gps, 'Pendiente']);
+        const [result] = await conexion.execute('INSERT INTO recicladoras (idrecicladora, nombre_rec, telefono_rec, paga, ciudad, barrio, calle, gps, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [recicladora.idrecicladora, recicladora.nombre_rec, recicladora.telefono_rec, recicladora.paga, recicladora.ciudad, recicladora.barrio, recicladora.calle, recicladora.gps, 'Pendiente']);
+        return result.insertId;
     }catch(error){
         console.log('Error al insertar recicladora en la base de datos');
         console.log(error);

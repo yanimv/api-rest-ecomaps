@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const tablaRecicladoras = require('../basedatos/recicladoras-bd');
+const tablaDetalleMaterial = require('../basedatos/detalleMaterial-bd');
 
 router.get('/', async (peti, resp)=>{
     try{
@@ -21,7 +22,11 @@ router.post('/', async (peti, resp)=>{
         let recicladora = peti.body;
         console.log("Se va a guardar la recicladora.");
         console.log(recicladora);
-        await tablaRecicladoras.insertar(recicladora);
+        const idgenerado = await tablaRecicladoras.insertar(recicladora);
+        for(let material of recicladora.materiales){
+            const detalle = {idmaterial: material.idmaterial, idrecicladora: idgenerado}
+            await tablaDetalleMaterial.insertar(detalle);
+        }
         resp.sendStatus(200);
     }catch(e) {
         console.log('Error en el POST de la ruta listarecicladoras.');

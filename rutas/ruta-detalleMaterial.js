@@ -53,7 +53,7 @@ router.delete('/:idrecicladora', async (peti, resp)=>{
         console.log('Error en el DELETE de la ruta detalleMaterial.');
         console.log(e);
         resp.status(500).send(e.message);
-        
+
     }
 });
 
