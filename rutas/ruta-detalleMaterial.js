@@ -5,9 +5,6 @@ const tablaDetalleMaterial = require('../basedatos/detalleMaterial-bd');
 router.get('/', async (peti, resp)=>{
     try{
         const listaDetalleMaterial = await tablaDetalleMaterial.consultar();
-        /*setTimeout(() => {
-            resp.json(listaLibros);
-        }, 3000);*/
         resp.json(listaDetalleMaterial);
     }catch(e){
         console.log('Error en el GET de la ruta detalleMaterial');

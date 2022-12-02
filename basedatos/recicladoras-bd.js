@@ -26,9 +26,9 @@ async function seleccionar(idmaterial){
     try {
         let resultado = [];
         if(idmaterial){
-            let consulta = 'SELECT * FROM recicladoras WHERE recicladoras.idrecicladora IN (SELECT idrecicladora FROM detalleMaterial WHERE detalleMaterial.idmaterial = ?)'
+            let consulta = 'SELECT * FROM recicladoras WHERE estado = "Visible" AND recicladoras.idrecicladora IN (SELECT idrecicladora FROM detalleMaterial WHERE detalleMaterial.idmaterial = ?)'
             if(Array.isArray(idmaterial)){
-                consulta = 'SELECT * FROM recicladoras WHERE recicladoras.idrecicladora IN (SELECT idrecicladora FROM detalleMaterial WHERE detalleMaterial.idmaterial IN (?))'
+                consulta = 'SELECT * FROM recicladoras WHERE estado = "Visible" AND recicladoras.idrecicladora IN (SELECT idrecicladora FROM detalleMaterial WHERE detalleMaterial.idmaterial IN (?))'
             }
             const [registros, campos] = await conexion.query(consulta, [idmaterial]);
             resultado = registros;
@@ -73,7 +73,8 @@ async function insertar(recicladora){
 
 async function insertarAdmi(recicladora){
     try{
-        await conexion.execute('INSERT INTO recicladoras (idrecicladora, nombre_rec, telefono_rec, paga, ciudad, barrio, calle, gps, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [recicladora.idrecicladora, recicladora.nombre_rec, recicladora.telefono_rec, recicladora.paga, recicladora.ciudad, recicladora.barrio, recicladora.calle, recicladora.gps, recicladora.estado]);
+        const [result] = await conexion.execute('INSERT INTO recicladoras (idrecicladora, nombre_rec, telefono_rec, paga, ciudad, barrio, calle, gps, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [recicladora.idrecicladora, recicladora.nombre_rec, recicladora.telefono_rec, recicladora.paga, recicladora.ciudad, recicladora.barrio, recicladora.calle, recicladora.gps, recicladora.estado]);
+        return result.insertId;
     }catch(error){
         console.log('Error al insertar recicladora en la base de datos');
         console.log(error);
